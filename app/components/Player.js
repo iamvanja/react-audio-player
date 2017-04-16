@@ -16,16 +16,18 @@ class Player extends Component {
                         {/* img or background-image? */}
                     </div>
                     <div className="time-bar">
-                        <span className="current-time">00:00</span>
-                        <progress value="50" max="100"></progress>
-                        <span className="total-time">02:59</span>
+                        <span className="time current">0:00</span>
+                        <div className="progress-container">
+                            <progress value="50" max="100"></progress>
+                        </div>
+                        <span className="time total">00:02:59</span>
                     </div>
                 </div>
                 <div className="player-bottom">
                     <div className="song-info">
-                        <h1 className="song-title">Three Little Birds</h1>
-                        <h2 className="song-album">The best of Bob Marley & the Waiters</h2>
-                        <h2 className="song-artist">Bob Marley</h2>
+                        <h1 className="info primary-content title">Three Little Birds</h1>
+                        <h2 className="info secondary-content album">The best of Bob Marley & the Waiters</h2>
+                        <h2 className="info secondary-content artist">Bob Marley</h2>
                     </div>
                     <div className="player-controls">
                         <button className="play-toggle">
