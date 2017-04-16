@@ -1,0 +1,9 @@
+{
+  "name": "audio-player",
+  "version": "0.1.0",
+  "description": "Yet another audio player. Uses React as a view layer.",
+  "main": "app/index.js",
+  "repository": "https://github.com/iamvanja/react-audio-player.git",
+  "author": "iamvanja <vanja@gavric.org>",
+  "license": "MIT"
+}
