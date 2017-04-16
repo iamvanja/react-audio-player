@@ -1,6 +1,7 @@
 'use strict';
 var webpack = require('webpack');
 var DashboardPlugin = require('webpack-dashboard/plugin');
+var autoprefixer = require('autoprefixer');
 
 var config = {
     entry: [
@@ -16,6 +17,26 @@ var config = {
                 test: /\.jsx?$/,
                 loaders: ['babel-loader', 'eslint-loader'],
                 exclude: /node_modules/
+            },
+            {
+                test: /\.scss$/,
+                loaders: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            sourceMap: true,
+                        }
+                    },
+                    'postcss-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                ]
             }
         ]
     },

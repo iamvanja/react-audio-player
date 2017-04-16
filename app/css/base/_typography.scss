@@ -1,0 +1,13 @@
+body {
+    font-family: $body-font-family;
+    color: $text-color;
+    font-weight: normal;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+p {
+    margin: 0;
+}
