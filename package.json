@@ -11,6 +11,7 @@
         "babel-core": "^6.24.1",
         "babel-eslint": "^7.2.2",
         "babel-loader": "^6.4.1",
+        "babel-polyfill": "^6.23.0",
         "babel-preset-es2015": "^6.24.1",
         "babel-preset-react": "^6.24.1",
         "css-loader": "^0.28.0",
@@ -33,12 +34,14 @@
         ]
     },
     "dependencies": {
+        "id3-reader": "https://github.com/aadsm/JavaScript-ID3-Reader",
         "normalize.css": "^6.0.0",
         "react": "^15.5.4",
         "react-dom": "^15.5.4"
     },
     "scripts": {
         "start": "./node_modules/webpack-dashboard/bin/webpack-dashboard.js webpack-dev-server",
-        "build": "NODE_ENV=production webpack -p --config webpack.config.js"
+        "build": "NODE_ENV=production webpack -p --config webpack.config.js",
+        "postinstall": "cp ./node_modules/id3-reader/dist/id3-minimized.js ./build/id3.js"
     }
 }

@@ -31,7 +31,8 @@
     box-shadow: 0 0 4px 4px rgba(darken($body-bg-color, 20%), 0.2);
 
     .album-art {
-        background: darken($body-bg-color, 20%);
+        background: darken($body-bg-color, 20%) no-repeat center center;
+        background-size: cover;
     }
 
     .time-bar {

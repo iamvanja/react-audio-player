@@ -15,6 +15,7 @@ class Player extends Component {
 
         this.state = initialState;
         this.durationFormatter = this.props.durationFormatter;
+        this.metaDataGetter = this.props.metaDataGetter;
     }
 
     componentDidMount() {
@@ -68,6 +69,16 @@ class Player extends Component {
                     format: this.props.totalTimeFormat,
                 }),
             });
+
+            this.metaDataGetter(e.target.currentSrc)
+            .then((tags) => {
+                this.setState({
+                    title: tags.title,
+                    artist: tags.artist,
+                    albumName: tags.album,
+                    albumArt: tags.picture,
+                })
+            });
             this.props.onLoadedMetadata && this.props.onLoadedMetadata(e);
         });
 
@@ -89,7 +100,13 @@ class Player extends Component {
             currentTime,
             progress,
             totalTime,
+            title,
+            artist,
+            albumName,
+            albumArt,
         } = this.state;
+
+        const albumArtStyle = albumArt ? {backgroundImage:`url(${albumArt})`} : {};
         return (
             <div className="player">
                 <audio src={mediaUrl} ref={(ref) => { this.audioEl = ref; }}>
@@ -97,9 +114,7 @@ class Player extends Component {
                 </audio>
 
                 <div className="player-top">
-                    <div className="album-art">
-                        {/* img or background-image? */}
-                    </div>
+                    <div className="album-art" style={albumArtStyle}></div>
                     <div className="time-bar">
                         <span className="time current">{currentTime}</span>
                         <div className="progress-container">
@@ -110,9 +125,9 @@ class Player extends Component {
                 </div>
                 <div className="player-bottom">
                     <div className="song-info">
-                        <h1 className="info-item primary-content title">Three Little Birds</h1>
-                        <h2 className="info-item secondary-content album">The best of Bob Marley & the Waiters</h2>
-                        <h2 className="info-item secondary-content artist">Bob Marley</h2>
+                        <h1 className="info-item primary-content title">{title}</h1>
+                        <h2 className="info-item secondary-content album">{albumName}</h2>
+                        <h2 className="info-item secondary-content artist">{artist}</h2>
                     </div>
                     <div className="player-controls">
                         <button className="play-toggle" onClick={(e)=>this.togglePlay(e)}>
@@ -130,6 +145,16 @@ Player.defaultProps = {
     durationFormatter: (duration => duration),
     currentTimeFormat: '00:00:00',
     totalTimeFormat: '00:00:00',
+    metaDataGetter: (tags) => {
+        return new Promise((resolve) => {
+            resolve({
+                title: 'Unknown Title',
+                artist: 'Unknown Artist',
+                album: 'Unknown Album',
+                picture: false,
+            })
+        });
+    },
 };
 
 Player.propTypes = {
@@ -137,6 +162,7 @@ Player.propTypes = {
     durationFormatter: PropTypes.func,
     currentTimeFormat: PropTypes.string,
     totalTimeFormat: PropTypes.string,
+    metaDataGetter: PropTypes.func,
 
     onPlay: PropTypes.func,
     onPause: PropTypes.func,

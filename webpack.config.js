@@ -5,6 +5,7 @@ var autoprefixer = require('autoprefixer');
 
 var config = {
     entry: [
+        'core-js/fn/promise',
         './app/index.js',
     ],
     output: {
