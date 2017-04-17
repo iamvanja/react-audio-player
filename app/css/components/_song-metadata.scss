@@ -1,0 +1,28 @@
+.song-metadata {
+    // variables
+    $primary-font-color: $primary-color;
+    $primary-font-size: 34px;
+    $secondary-font-color: #c6c5c5;
+    $secondary-font-size: 18px;
+
+    text-align: center;
+    padding: 2%;
+    display:flex;
+    flex-direction: column;
+    .info-item {
+        font-weight: normal;
+    }
+    .primary-content {
+        color: $primary-font-color;
+        font-size: $primary-font-size;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .secondary-content {
+        color: $secondary-font-color;
+        font-size: $secondary-font-size;
+        flex: 0 0 auto;
+    }
+}
