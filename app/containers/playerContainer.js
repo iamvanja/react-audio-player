@@ -1,13 +1,13 @@
 import React from 'react';
-import * as constants from '../constants';
+import Player from '../components/Player';
 import getFormattedTime from '../lib/time.formatting.js';
 
-import Player from '../components/Player';
+const songUrl = '/audio/02+Three+Little+Birds.mp3';
 
 const PlayerContainer = () => {
     return (
         <Player
-            mediaUrl={constants.songUrl}
+            mediaUrl={songUrl}
             durationFormatter={getFormattedTime}
             currentTimeFormat={'0:00'}
             totalTimeFormat={'00:00:00'}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as constants from '../constants/player';
 
 const initialState = {
     isPlaying: false,
@@ -34,7 +35,7 @@ class Player extends Component {
         const player = this.audioEl;
 
         // Player started playing
-        player.addEventListener('play', (e) => {
+        player.addEventListener(constants.PLAYER_PLAY, (e) => {
             console.log('play');
             this.setState({
                 isPlaying: true,
@@ -43,7 +44,7 @@ class Player extends Component {
         });
 
         // Player paused
-        player.addEventListener('pause', (e) => {
+        player.addEventListener(constants.PLAYER_PAUSE, (e) => {
             console.log('pause');
             this.setState({
                 isPlaying: false,
@@ -52,7 +53,7 @@ class Player extends Component {
         });
 
         // Player finished playing to the end
-        player.addEventListener('ended', (e) => {
+        player.addEventListener(constants.PLAYER_ENDED, (e) => {
             console.log('ended');
             this.setState({
                 isPlaying: false,
@@ -61,7 +62,7 @@ class Player extends Component {
         });
 
         // Player loaded metadata
-        player.addEventListener('loadedmetadata', (e) => {
+        player.addEventListener(constants.PLAYER_LOADED_META, (e) => {
             this.setState({
                 totalTime: this.durationFormatter(player.duration, {
                     format: this.props.totalTimeFormat,
@@ -71,7 +72,7 @@ class Player extends Component {
         });
 
         // Player updated time
-        player.addEventListener('timeupdate', (e) => {
+        player.addEventListener(constants.PLAYER_TIME_UPDATE, (e) => {
             this.setState({
                 progress: Math.floor((player.currentTime / player.duration) * 100),
                 currentTime: this.durationFormatter(player.currentTime, {
