@@ -11,14 +11,19 @@
     flex-direction: column;
     .info-item {
         font-weight: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    .primary-content {
-        color: $primary-font-color;
-        font-size: $primary-font-size;
+    .primary-container {
         flex: 1 1 auto;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .primary-content {
+        color: $primary-font-color;
+        font-size: $primary-font-size;
     }
     .secondary-content {
         color: $secondary-font-color;

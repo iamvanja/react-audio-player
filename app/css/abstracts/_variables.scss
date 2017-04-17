@@ -7,4 +7,5 @@ $body-bg-color: $secondary-color;
 $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $text-color: $primary-color;
 
-
+// media queries
+$mq-small-height: "only screen and (min-width: 460px) and (max-height: 470px)";

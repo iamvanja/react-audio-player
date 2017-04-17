@@ -4,8 +4,10 @@
     $border-radius: 20px;
 
     // layout
-    width: 93%;
+    width: 95%;
+    max-width: 520px;
     height: 95%;
+    max-height: 800px;
     .player-top {
         height: 57%;
         position: relative;
@@ -33,4 +35,15 @@
     border-radius: $border-radius;
     overflow: hidden;
     box-shadow: 0 0 4px 4px rgba(darken($body-bg-color, 20%), 0.2);
+
+    @media #{$mq-small-height} {
+        max-width: 800px;
+        min-height: 240px;
+        .player-top,
+        .player-bottom {
+            height: 100%;
+            width: 50%;
+            float: left;
+        }
+    }
 }
