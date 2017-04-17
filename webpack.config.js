@@ -5,6 +5,7 @@ var autoprefixer = require('autoprefixer');
 
 var config = {
     entry: [
+        'core-js/fn/promise',
         './app/index.js',
     ],
     output: {
@@ -30,6 +31,7 @@ var config = {
                         }
                     },
                     'postcss-loader',
+                    'resolve-url-loader',
                     {
                         loader: 'sass-loader',
                         options: {
@@ -37,7 +39,15 @@ var config = {
                         }
                     },
                 ]
-            }
+            },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 1000,
+                    name: 'fonts/[name].[ext]'
+                }
+            },
         ]
     },
     devServer: {

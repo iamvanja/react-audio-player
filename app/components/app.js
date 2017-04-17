@@ -1,9 +1,11 @@
 import React from 'react';
 
+import PlayerContainer from '../containers/playerContainer';
+
 const App = () => {
     return (
         <div className="app">
-            <h1>Audio player</h1>
+            <PlayerContainer />
         </div>
     );
 };

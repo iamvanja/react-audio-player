@@ -8,4 +8,10 @@
 
 @import
     'base/base',
-    'base/typography';
+    'base/layout',
+    'base/helpers',
+    'base/typography',
+    'base/font-player';
+
+@import
+    'components/player';

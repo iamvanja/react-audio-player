@@ -33,6 +33,7 @@ bower_components
 build/Release
 build/*.js
 build/*.map
+build/**/*.mp3
 doc/*
 
 # Dependency directories
