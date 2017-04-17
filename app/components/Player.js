@@ -97,6 +97,7 @@ class Player extends Component {
     render() {
         const { mediaUrl } = this.props;
         const {
+            isPlaying,
             currentTime,
             progress,
             totalTime,
@@ -130,9 +131,9 @@ class Player extends Component {
                         <h2 className="info-item secondary-content artist">{artist}</h2>
                     </div>
                     <div className="player-controls">
-                        <button className="play-toggle" onClick={(e)=>this.togglePlay(e)}>
-                            <span className="play">PLAY</span>
-                            <span className="pause">PAUSE</span>
+                        <button className="play-toggle reset" onClick={(e)=>this.togglePlay(e)}>
+                            {!isPlaying && <i className="icon-play"></i>}
+                            {isPlaying && <i className="icon-pause"></i>}
                         </button>
                     </div>
                 </div>

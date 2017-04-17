@@ -99,6 +99,16 @@
     }
 
     .player-controls {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            height: 72px;
+            width: 72px;
+            font-size: 50px;
+            text-align: center;
+            color: #3a3a3a;
+        }
     }
 }
