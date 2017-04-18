@@ -14,6 +14,7 @@ import PlayerControls from './PlayerControls';
  */
 const initialState = {
     isPlaying: false,
+    isLoadingMeta: false,
     progress: 0,
     currentTime: 0,
     totalTime: 0,
@@ -74,6 +75,26 @@ class Player extends Component {
     registerHandlers() {
         const player = this.audioEl;
 
+        // Player began looking for media data
+        player.addEventListener(constants.PLAYER_LOAD_STARTED, (e) => {
+            this.setState({
+                isLoadingMeta: true,
+                isLoading: true,
+            });
+
+            this.metaDataGetter(e.target.currentSrc)
+            .then((tags) => {
+                this.setState({
+                    title: tags.title,
+                    artist: tags.artist,
+                    albumName: tags.album,
+                    albumArt: tags.picture,
+                    isLoadingMeta: false,
+                })
+                this.props.onLoadedMetadata && this.props.onLoadedMetadata(e, tags);
+            });
+        });
+
         // Player started playing
         player.addEventListener(constants.PLAYER_PLAY, (e) => {
             this.setState({
@@ -105,17 +126,6 @@ class Player extends Component {
                     format: this.props.totalTimeFormat,
                 }),
             });
-
-            this.metaDataGetter(e.target.currentSrc)
-            .then((tags) => {
-                this.setState({
-                    title: tags.title,
-                    artist: tags.artist,
-                    albumName: tags.album,
-                    albumArt: tags.picture,
-                })
-            });
-            this.props.onLoadedMetadata && this.props.onLoadedMetadata(e);
         });
 
         // Player updated time
@@ -149,6 +159,7 @@ class Player extends Component {
             artist,
             albumName,
             albumArt,
+            isLoadingMeta,
         } = this.state;
 
         return (
@@ -172,6 +183,7 @@ class Player extends Component {
                         title={title}
                         albumName={albumName}
                         artist={artist}
+                        componentClasses={isLoadingMeta ? 'loading' : ''}
                     />
                     <PlayerControls
                         togglePlay={()=>this.togglePlay()}
