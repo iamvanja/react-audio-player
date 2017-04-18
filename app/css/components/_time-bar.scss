@@ -39,4 +39,19 @@
             background-color: $progress-value;
         }
     }
+
+    // animations
+    &.bar-enter {
+        transform: translate3d(0, 50px, 0);
+        &.bar-enter-active {
+            transition: transform 0.2s ease;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &.paused {
+        .time.current {
+            animation: blinker 2s linear infinite;
+        }
+    }
 }

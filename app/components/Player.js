@@ -128,6 +128,8 @@ class Player extends Component {
                         currentTime={currentTime}
                         progress={progress}
                         totalTime={totalTime}
+                        isVisible={currentTime !== 0}
+                        componentClasses={isPlaying ? '': 'paused'}
                     />
                 </div>
                 <div className="player-bottom">

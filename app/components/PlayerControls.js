@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 const PlayerControls = ({ togglePlay, isPlaying }) => {
     return (
         <div className="player-controls">
             <button className="play-toggle reset" onClick={(e)=>togglePlay(e)}>
-                {!isPlaying && <i className="icon-play"></i>}
-                {isPlaying && <i className="icon-pause"></i>}
+                <CSSTransitionGroup transitionName="button-icon" transitionEnterTimeout={200} transitionLeaveTimeout={200}>
+                    {!isPlaying && <i className="icon-play"></i>}
+                    {isPlaying && <i className="icon-pause"></i>}
+                </CSSTransitionGroup>
             </button>
         </div>
     );
