@@ -7,6 +7,11 @@ import TimeBar from './TimeBar';
 import SongMetaData from './SongMetaData';
 import PlayerControls from './PlayerControls';
 
+/**
+ * Initial state of the component.
+ *
+ * @type       {Object}
+ */
 const initialState = {
     isPlaying: false,
     progress: 0,
@@ -18,7 +23,26 @@ const initialState = {
     picture: false,
 };
 
+/**
+  * Audio player component.
+  *
+  * Renders components:
+  * AlbumArt
+  * TimeBar
+  * SongMetaData
+  * PlayerControls
+  *
+  * @class      Player (name)
+  *
+  * @return {ReactElement} markup
+  */
 class Player extends Component {
+    /**
+     * Constructor.
+     * Sets the initial state and methods from props for convenience later.
+     *
+     * @param   {object}  props  Component properties (for details check `Player.propTypes` at the bottom)
+     */
     constructor(props) {
         super(props);
 
@@ -27,20 +51,26 @@ class Player extends Component {
         this.metaDataGetter = this.props.metaDataGetter;
     }
 
+    /**
+     * When the component is in the DOM
+     * (React's lifecycle hook)
+     *
+     */
     componentDidMount() {
         this.registerHandlers();
     }
 
+    /**
+     * Toggles play/pause
+     */
     togglePlay() {
         const player = this.audioEl;
-        if (player.paused) {
-            player.play();
-        }
-        else {
-            player.pause();
-        }
+        player[ player.paused ? 'play' : 'pause']();
     }
 
+    /**
+     * Registers handlers
+     */
     registerHandlers() {
         const player = this.audioEl;
 
@@ -100,6 +130,11 @@ class Player extends Component {
         });
     }
 
+    /**
+     * Renders the Player component.
+     *
+     * @return {ReactElement} markup
+     */
     render() {
         const {
             unsupportedMessage,
@@ -148,6 +183,9 @@ class Player extends Component {
     }
 }
 
+/**
+ * Defines default values for the optional properties in case they are not passed from the parent component.
+ */
 Player.defaultProps = {
     unsupportedMessage: 'Please upgrade to a more modern browser to use this player.',
     durationFormatter: (duration => duration),
@@ -165,6 +203,9 @@ Player.defaultProps = {
     },
 };
 
+/**
+ * Defines property types for this component.
+ */
 Player.propTypes = {
     unsupportedMessage: PropTypes.string,
     mediaUrl: PropTypes.string.isRequired,

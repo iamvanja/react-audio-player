@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Renders SongMetaData components.
+ *
+ * @class      SongMetaData (name)
+ * @param      {Object}       props            Component properties
+ * @param      {String}       props.title      The title
+ * @param      {String}       props.albumName  The album name
+ * @param      {String}       props.artist     The artist
+ * @return     {ReactElement} markup
+ */
 const SongMetaData = ({ title, albumName, artist }) => {
     return (
         <div className="song-metadata">
@@ -13,6 +23,9 @@ const SongMetaData = ({ title, albumName, artist }) => {
     );
 };
 
+/**
+ * Defines property types for this component.
+ */
 SongMetaData.propTypes = {
     title: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
