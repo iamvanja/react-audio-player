@@ -11,6 +11,10 @@
         text-align: center;
         color: $button-font-color;
 
+        &:disabled {
+            opacity: 0.2;
+        }
+
         // animations
         .button-icon-enter {
             position: absolute;
