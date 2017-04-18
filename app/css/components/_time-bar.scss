@@ -48,6 +48,12 @@
             transform: translate3d(0, 0, 0);
         }
     }
+    &.bar-leave {
+        &.bar-leave-active {
+            transition: transform 0.2s ease;
+            transform: translate3d(0, 50px, 0);
+        }
+    }
 
     &.paused {
         .time.current {

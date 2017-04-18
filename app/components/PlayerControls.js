@@ -11,10 +11,10 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
  * @param      {Bool}         props.isPlaying   Indicates if playing
  * @return     {ReactElement} markup
  */
-const PlayerControls = ({ togglePlay, isPlaying }) => {
+const PlayerControls = ({ togglePlay, isPlaying, isPlayDisabled }) => {
     return (
         <div className="player-controls">
-            <button className="play-toggle reset" onClick={(e)=>togglePlay(e)}>
+            <button className="play-toggle reset" onClick={(e)=>togglePlay(e)} disabled={isPlayDisabled}>
                 <CSSTransitionGroup transitionName="button-icon" transitionEnterTimeout={200} transitionLeaveTimeout={200}>
                     {!isPlaying && <i className="icon-play"></i>}
                     {isPlaying && <i className="icon-pause"></i>}
@@ -30,6 +30,7 @@ const PlayerControls = ({ togglePlay, isPlaying }) => {
 PlayerControls.propTypes = {
     togglePlay: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
+    isPlayDisabled: PropTypes.bool.isRequired,
 };
 
 export default PlayerControls;

@@ -1,10 +1,12 @@
 .song-metadata {
     // variables
+    $bg: #fff;
     $primary-font-color: $primary-color;
     $primary-font-size: 34px;
     $secondary-font-color: #c6c5c5;
     $secondary-font-size: 18px;
 
+    background: $bg;
     text-align: center;
     padding: 2%;
     display:flex;
@@ -30,4 +32,20 @@
         font-size: $secondary-font-size;
         flex: 0 0 auto;
     }
+
+    &.loading {
+        position: relative;
+        &:before {
+            content:'';
+            position: absolute;
+            top:0;right:0;bottom:0;left:0;
+            background:darken($bg, 8%);
+
+            animation: 1.5s pulser ease-out alternate infinite;
+        }
+        .info-item {
+            visibility: hidden;
+        }
+    }
 }
+

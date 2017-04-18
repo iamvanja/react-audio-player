@@ -1,4 +1,5 @@
 .album-art {
-    background: darken($body-bg-color, 20%) no-repeat top center;
+    $bg: darken($body-bg-color, 15%);
+    background: $bg no-repeat top center;
     background-size: cover;
 }

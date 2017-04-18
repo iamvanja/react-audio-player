@@ -14,6 +14,8 @@ import PlayerControls from './PlayerControls';
  */
 const initialState = {
     isPlaying: false,
+    isLoading: false,
+    isLoadingMeta: false,
     progress: 0,
     currentTime: 0,
     totalTime: 0,
@@ -74,6 +76,34 @@ class Player extends Component {
     registerHandlers() {
         const player = this.audioEl;
 
+        // Player began looking for media data
+        player.addEventListener(constants.PLAYER_LOAD_STARTED, (e) => {
+            this.setState({
+                isLoadingMeta: true,
+                isLoading: true,
+            });
+
+            this.metaDataGetter(e.target.currentSrc)
+            .then((tags) => {
+                this.setState({
+                    title: tags.title,
+                    artist: tags.artist,
+                    albumName: tags.album,
+                    albumArt: tags.picture,
+                    isLoadingMeta: false,
+                })
+                this.props.onLoadedMetadata && this.props.onLoadedMetadata(e, tags);
+            });
+        });
+
+        // Player can play the media data at the current playback position for the first time
+        player.addEventListener(constants.PLAYER_LOADED_DATA, (e) => {
+            this.setState({
+                isLoading: false,
+            });
+            this.props.onLoadedData && this.props.onLoadedData(e);
+        });
+
         // Player started playing
         player.addEventListener(constants.PLAYER_PLAY, (e) => {
             this.setState({
@@ -94,6 +124,7 @@ class Player extends Component {
         player.addEventListener(constants.PLAYER_ENDED, (e) => {
             this.setState({
                 isPlaying: false,
+                currentTime: 0,
             });
             this.props.onEnded && this.props.onEnded(e);
         });
@@ -105,17 +136,6 @@ class Player extends Component {
                     format: this.props.totalTimeFormat,
                 }),
             });
-
-            this.metaDataGetter(e.target.currentSrc)
-            .then((tags) => {
-                this.setState({
-                    title: tags.title,
-                    artist: tags.artist,
-                    albumName: tags.album,
-                    albumArt: tags.picture,
-                })
-            });
-            this.props.onLoadedMetadata && this.props.onLoadedMetadata(e);
         });
 
         // Player updated time
@@ -149,6 +169,8 @@ class Player extends Component {
             artist,
             albumName,
             albumArt,
+            isLoadingMeta,
+            isLoading,
         } = this.state;
 
         return (
@@ -172,10 +194,12 @@ class Player extends Component {
                         title={title}
                         albumName={albumName}
                         artist={artist}
+                        componentClasses={isLoadingMeta ? 'loading' : ''}
                     />
                     <PlayerControls
                         togglePlay={()=>this.togglePlay()}
                         isPlaying={isPlaying}
+                        isPlayDisabled={ isLoadingMeta || isLoading }
                     />
                 </div>
             </div>
@@ -217,6 +241,7 @@ Player.propTypes = {
     onPlay: PropTypes.func,
     onPause: PropTypes.func,
     onEnded: PropTypes.func,
+    onLoadedData: PropTypes.func,
     onLoadedMetadata: PropTypes.func,
     onTimeUpdate: PropTypes.func,
 };
