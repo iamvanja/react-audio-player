@@ -124,6 +124,7 @@ class Player extends Component {
         player.addEventListener(constants.PLAYER_ENDED, (e) => {
             this.setState({
                 isPlaying: false,
+                currentTime: 0,
             });
             this.props.onEnded && this.props.onEnded(e);
         });
