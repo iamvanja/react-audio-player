@@ -14,6 +14,7 @@ import PlayerControls from './PlayerControls';
  */
 const initialState = {
     isPlaying: false,
+    isLoading: false,
     isLoadingMeta: false,
     progress: 0,
     currentTime: 0,
@@ -95,6 +96,14 @@ class Player extends Component {
             });
         });
 
+        // Player can play the media data at the current playback position for the first time
+        player.addEventListener(constants.PLAYER_LOADED_DATA, (e) => {
+            this.setState({
+                isLoading: false,
+            });
+            this.props.onLoadedData && this.props.onLoadedData(e);
+        });
+
         // Player started playing
         player.addEventListener(constants.PLAYER_PLAY, (e) => {
             this.setState({
@@ -160,6 +169,7 @@ class Player extends Component {
             albumName,
             albumArt,
             isLoadingMeta,
+            isLoading,
         } = this.state;
 
         return (
@@ -188,6 +198,7 @@ class Player extends Component {
                     <PlayerControls
                         togglePlay={()=>this.togglePlay()}
                         isPlaying={isPlaying}
+                        isPlayDisabled={ isLoadingMeta || isLoading }
                     />
                 </div>
             </div>
@@ -229,6 +240,7 @@ Player.propTypes = {
     onPlay: PropTypes.func,
     onPause: PropTypes.func,
     onEnded: PropTypes.func,
+    onLoadedData: PropTypes.func,
     onLoadedMetadata: PropTypes.func,
     onTimeUpdate: PropTypes.func,
 };
