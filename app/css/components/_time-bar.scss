@@ -1,0 +1,57 @@
+.time-bar {
+    // variables
+    $bg-color: #000;
+    $text-color: #fff;
+    $progress-bg: #fff;
+    $progress-value: darken($body-bg-color, 50%);
+
+    // layout
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    span.time {
+        display: block;
+        flex: 0 0 auto;
+        text-align: center;
+        width: 25%;
+    }
+    .progress-container {
+        flex: 1 1 auto;
+    }
+
+    // general
+    background: rgba($bg-color, 0.8);
+    color: $text-color;
+    progress {
+        appearance: none;
+        width: 100%;
+        height: 5px;
+        border: none;
+        background: $progress-bg;
+        vertical-align: middle;
+        &::-webkit-progress-bar {
+            background: $progress-bg;
+        }
+        &::-webkit-progress-value {
+            background-color: $progress-value;
+        }
+        &::-moz-progress-bar {
+            background-color: $progress-value;
+        }
+    }
+
+    // animations
+    &.bar-enter {
+        transform: translate3d(0, 50px, 0);
+        &.bar-enter-active {
+            transition: transform 0.2s ease;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &.paused {
+        .time.current {
+            animation: blinker 2s linear infinite;
+        }
+    }
+}

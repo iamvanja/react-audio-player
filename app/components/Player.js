@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as constants from '../constants/player';
 
+import AlbumArt from './AlbumArt';
+import TimeBar from './TimeBar';
+import SongMetaData from './SongMetaData';
+import PlayerControls from './PlayerControls';
+
 const initialState = {
     isPlaying: false,
     progress: 0,
     currentTime: 0,
     totalTime: 0,
+    title: '',
+    albumName: '',
+    artist: '',
+    picture: false,
 };
 
 class Player extends Component {
@@ -37,7 +46,6 @@ class Player extends Component {
 
         // Player started playing
         player.addEventListener(constants.PLAYER_PLAY, (e) => {
-            console.log('play');
             this.setState({
                 isPlaying: true,
             });
@@ -46,7 +54,6 @@ class Player extends Component {
 
         // Player paused
         player.addEventListener(constants.PLAYER_PAUSE, (e) => {
-            console.log('pause');
             this.setState({
                 isPlaying: false,
             });
@@ -55,7 +62,6 @@ class Player extends Component {
 
         // Player finished playing to the end
         player.addEventListener(constants.PLAYER_ENDED, (e) => {
-            console.log('ended');
             this.setState({
                 isPlaying: false,
             });
@@ -95,7 +101,10 @@ class Player extends Component {
     }
 
     render() {
-        const { mediaUrl } = this.props;
+        const {
+            unsupportedMessage,
+            mediaUrl,
+        } = this.props;
         const {
             isPlaying,
             currentTime,
@@ -107,35 +116,32 @@ class Player extends Component {
             albumArt,
         } = this.state;
 
-        const albumArtStyle = albumArt ? {backgroundImage:`url(${albumArt})`} : {};
         return (
             <div className="player">
                 <audio src={mediaUrl} ref={(ref) => { this.audioEl = ref; }}>
-                    <p>Please upgrade to a more modern browser to use this player.</p>
+                    <p>{unsupportedMessage}</p>
                 </audio>
 
                 <div className="player-top">
-                    <div className="album-art" style={albumArtStyle}></div>
-                    <div className="time-bar">
-                        <span className="time current">{currentTime}</span>
-                        <div className="progress-container">
-                            <progress value={progress} max="100"></progress>
-                        </div>
-                        <span className="time total">{totalTime}</span>
-                    </div>
+                    <AlbumArt imageSrc={albumArt} />
+                    <TimeBar
+                        currentTime={currentTime}
+                        progress={progress}
+                        totalTime={totalTime}
+                        isVisible={currentTime !== 0}
+                        componentClasses={isPlaying ? '': 'paused'}
+                    />
                 </div>
                 <div className="player-bottom">
-                    <div className="song-info">
-                        <h1 className="info-item primary-content title">{title}</h1>
-                        <h2 className="info-item secondary-content album">{albumName}</h2>
-                        <h2 className="info-item secondary-content artist">{artist}</h2>
-                    </div>
-                    <div className="player-controls">
-                        <button className="play-toggle reset" onClick={(e)=>this.togglePlay(e)}>
-                            {!isPlaying && <i className="icon-play"></i>}
-                            {isPlaying && <i className="icon-pause"></i>}
-                        </button>
-                    </div>
+                    <SongMetaData
+                        title={title}
+                        albumName={albumName}
+                        artist={artist}
+                    />
+                    <PlayerControls
+                        togglePlay={()=>this.togglePlay()}
+                        isPlaying={isPlaying}
+                    />
                 </div>
             </div>
         );
@@ -143,6 +149,7 @@ class Player extends Component {
 }
 
 Player.defaultProps = {
+    unsupportedMessage: 'Please upgrade to a more modern browser to use this player.',
     durationFormatter: (duration => duration),
     currentTimeFormat: '00:00:00',
     totalTimeFormat: '00:00:00',
@@ -159,6 +166,7 @@ Player.defaultProps = {
 };
 
 Player.propTypes = {
+    unsupportedMessage: PropTypes.string,
     mediaUrl: PropTypes.string.isRequired,
     durationFormatter: PropTypes.func,
     currentTimeFormat: PropTypes.string,

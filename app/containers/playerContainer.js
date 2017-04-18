@@ -1,7 +1,7 @@
 import React from 'react';
 import Player from '../components/Player';
 
-import getFormattedTime from '../lib/time.formatting.js';
+import getFormattedTime from '../lib/time.formatting';
 import getMetaData from '../lib/id3';
 
 const songUrl = '/audio/02+Three+Little+Birds.mp3';

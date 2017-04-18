@@ -1,0 +1,35 @@
+.player-controls {
+    $button-font-size: 90px;
+    $button-font-color: #3a3a3a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        font-size: $button-font-size;
+        text-align: center;
+        color: $button-font-color;
+
+        // animations
+        .button-icon-enter {
+            position: absolute;
+            transform: scale(0);
+            opacity: 0;
+            &.button-icon-enter-active {
+                transition: 0.15s ease-out;
+                transition-property: opacity, transform;
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .button-icon-leave {
+            &.button-icon-leave-active {
+                transition: 0.15s ease-in;
+                transition-property: opacity, transform;
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+    }
+}
