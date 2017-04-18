@@ -2,6 +2,7 @@
 var webpack = require('webpack');
 var DashboardPlugin = require('webpack-dashboard/plugin');
 var autoprefixer = require('autoprefixer');
+const isProduction = process.env.NODE_ENV === 'production';
 
 var config = {
     entry: [
@@ -27,7 +28,7 @@ var config = {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 1,
-                            sourceMap: true,
+                            sourceMap: isProduction ? false : true,
                         }
                     },
                     'postcss-loader',
@@ -36,6 +37,7 @@ var config = {
                         loader: 'sass-loader',
                         options: {
                             sourceMap: true,
+                            outputStyle: isProduction ? 'compressed' : 'expanded',
                         }
                     },
                 ]
@@ -59,11 +61,16 @@ var config = {
         new webpack.HotModuleReplacementPlugin(),
         new DashboardPlugin(),
     ],
-    devtool: 'eval-source-map'
+    // source map in ext file in production and cheap fast source maps in dev
+    devtool: isProduction ? 'hidden-source-map' : 'eval-source-map',
+    // do not continue on error
+    bail: true,
 };
 
 if (process.env.NODE_ENV === 'production') {
-    // production-specific build options go here
+    // do not use devServer or dev plugins
+    delete config.devServer;
+    config.plugins = [];
 }
 
 module.exports = config;
