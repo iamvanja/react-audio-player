@@ -2,6 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
+/**
+ * Renders player's controls.
+ *
+ * @class      PlayerControls (name)
+ * @param      {Object}       props             Component properties
+ * @param      {Function}     props.togglePlay  The toggle play
+ * @param      {Bool}         props.isPlaying   Indicates if playing
+ * @return     {ReactElement} markup
+ */
 const PlayerControls = ({ togglePlay, isPlaying }) => {
     return (
         <div className="player-controls">
@@ -15,6 +24,9 @@ const PlayerControls = ({ togglePlay, isPlaying }) => {
     );
 };
 
+/**
+ * Defines property types for this component.
+ */
 PlayerControls.propTypes = {
     togglePlay: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
