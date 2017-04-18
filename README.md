@@ -1,6 +1,6 @@
 # React Audio Player
 
-Audio player built using using [React](https://facebook.github.io/react/). The build tool used is [Webpack](https://webpack.github.io/). Some of the features include responsivness and dynamically reading ID3 tags.
+Audio player built using using [React](https://facebook.github.io/react/). The build tool used is [Webpack](https://webpack.github.io/). Some of the features include responsiveness and dynamically reading ID3 tags.
 
 ### Getting started
 **Step 1**. Make sure that you have [Node.js](https://nodejs.org/) v6 or newer and ideally [Yarn](https://yarnpkg.com/) installed on your machine (npm is fine too).
