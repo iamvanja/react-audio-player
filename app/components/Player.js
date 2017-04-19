@@ -14,6 +14,7 @@ import PlayerControls from './PlayerControls';
  */
 const initialState = {
     isPlaying: false,
+    canPlay: false,
     isLoading: false,
     isLoadingMeta: false,
     progress: 0,
@@ -80,6 +81,7 @@ class Player extends Component {
         player.addEventListener(constants.PLAYER_LOAD_STARTED, (e) => {
             this.setState({
                 isLoadingMeta: true,
+                canPlay: false,
                 isLoading: true,
             });
 
@@ -94,6 +96,14 @@ class Player extends Component {
                 })
                 this.props.onLoadedMetadata && this.props.onLoadedMetadata(e, tags);
             });
+        });
+
+        // Player can play the media data at the current playback position for the first time
+        player.addEventListener(constants.PLAYER_CAN_PLAY, (e) => {
+            this.setState({
+                canPlay: true,
+            });
+            this.props.onCanPlay && this.props.onCanPlay(e);
         });
 
         // Player can play the media data at the current playback position for the first time
@@ -171,11 +181,12 @@ class Player extends Component {
             albumArt,
             isLoadingMeta,
             isLoading,
+            canPlay,
         } = this.state;
 
         return (
             <div className="player">
-                <audio src={mediaUrl} ref={(ref) => { this.audioEl = ref; }}>
+                <audio src={mediaUrl} autoPlay ref={(ref) => { this.audioEl = ref; }}>
                     <p>{unsupportedMessage}</p>
                 </audio>
 
@@ -199,7 +210,7 @@ class Player extends Component {
                     <PlayerControls
                         togglePlay={()=>this.togglePlay()}
                         isPlaying={isPlaying}
-                        isPlayDisabled={ isLoadingMeta || isLoading }
+                        isPlayDisabled={ !canPlay }
                     />
                 </div>
             </div>
@@ -239,6 +250,7 @@ Player.propTypes = {
     metaDataGetter: PropTypes.func,
 
     onPlay: PropTypes.func,
+    onCanPlay: PropTypes.func,
     onPause: PropTypes.func,
     onEnded: PropTypes.func,
     onLoadedData: PropTypes.func,
